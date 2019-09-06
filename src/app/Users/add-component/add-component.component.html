@@ -1,0 +1,59 @@
+<div class="register">
+    <div class="col-md-9 register-right">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <h3 class="register-heading">User Registration Form</h3>
+                <form method="POST" enctype="multipart/form-data" #registerForm="ngForm" id="registration-form" (ngSubmit)="registerForm.form.valid && onSubmit(registerForm.value)">
+                    <div class="row register-form">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="form-group col-md">
+                                    <input type="text" class="form-control" name="firstName" #firstName="ngModel" [(ngModel)]="registerForm.firstName" placeholder="First Name *" required minlength="3">
+                                    <div *ngIf="registerForm.submitted && registerForm.invalid" class="alert alert-danger">
+                                        <div *ngIf="firstName.errors.required" ngClass="firstName.errors.required">First Name Field is Required</div>
+                                        <div *ngIf="firstName.errors.minlength" ngClass="firstName.errors.minlength">First Name length should be 3</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md">
+                                    <input type="text" class="form-control" name="lastName" #lastName="ngModel" [(ngModel)]="registerForm.lastName" placeholder="Last Name *" required minlength="3">
+                                    <div *ngIf="registerForm.submitted && registerForm.invalid" class="alert alert-danger">
+                                        <div *ngIf="lastName.errors.required" ngClass="lastName.errors.required">First Name Field is Required</div>
+                                        <div *ngIf="lastName.errors.minlength" ngClass="lastName.errors.minlength">First Name length should be 3</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="registerForm.email" placeholder="Your Email *" required pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                                <div *ngIf="registerForm.submitted && email.invalid" class="alert alert-danger">
+                                    <div *ngIf="email.errors.required" ngClass="email.errors.required">Email Address is required</div>
+                                    <div *ngIf="email.errors.pattern" ngClass="email.errors.pattern">Enter valid Email Address</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="file" name="file" id="file" class="upload" #image="ngModel" [(ngModel)]="registerForm.image" (change)="fileUpload($event)" required/>
+                                <div *ngIf="registerForm.submitted && image.invalid" class="alert alert-danger">
+                                    <div ngClass="image.errors.required">Please Select Image</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="registerForm.password" placeholder="Password *" required minlength="6">
+                                <div *ngIf="registerForm.submitted && password.invalid" class="alert alert-danger">
+                                    <div *ngIf="password.errors.required" ngClass="password.errors.required">Password Filed is required</div>
+                                    <div *ngIf="password.errors.minlength" ngClass="password.errors.minlength">Password lenght should be Min 6</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="confirmPassword" #confirmPassword="ngModel" [(ngModel)]="registerForm.confirmPassword" placeholder="Confirm Password *" required minlength="6">
+                                <div *ngIf="registerForm.submitted && confirmPassword.invalid" class="alert alert-danger">
+                                    <div *ngIf="confirmPassword.errors.required" ngClass="confirmPassword.errors.required">Confirm Password is required</div>
+                                    <div *ngIf="confirmPassword.errors.minlength" ngClass="confirmPassword.errors.minlength">Confirm Password Length Should be 6</div>
+                                </div>
+                            </div>
+                            <input type="submit" class="btnRegister col-md-6"  value="Register"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="active"> Sign In </h2>
+        <!-- Login Form -->
+        <form #loginForm="ngForm" (ngSubmit)="loginForm.form.valid && onSubmit(loginForm.value)" method="POST">
+            <input type="email" class="fadeIn second" name="email" [(ngModel)]="userEmail" #email="ngModel" placeholder="Enter Your Email Address" autofocus required pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+            <div *ngIf="loginForm.submitted && email.invalid" class="alert alert-danger alertdesign">
+                <div *ngIf="email.errors.required" ngClass="email.errors.required">Email Address is required</div>
+                <div *ngIf="email.errors.pattern" ngClass="email.errors.pattern">Enter valid Email Address</div>
+            </div>
+
+            <input type="password" class="fadeIn third" name="password" [(ngModel)]="userPassword" #password="ngModel" placeholder="password" required minlength="6">
+            <div *ngIf="loginForm.submitted && password.invalid" class="alert alert-danger alertdesign">
+                <div *ngIf="password.errors.required" ngClass="password.errors.required">Password Field required</div>
+                <div *ngIf="password.errors.minlength" ngClass="password.errors.minlength">Password Field Min Length is 6</div>
+            </div>
+            <input type="submit" class="fadeIn fourth" value="Log In">
+        </form>
+    </div>
+</div>
