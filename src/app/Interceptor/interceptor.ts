@@ -10,6 +10,12 @@ import {Router} from "@angular/router";
 
 export class Interceptor implements HttpInterceptor{
     spinner;
+
+    /*
+    * Set a every Request Authorization
+    * if Token has Than other wise
+     * it will give error
+    * */
     intercept(request: HttpRequest<any>, next: HttpHandler):Observable<any>{
         let token = window.localStorage.getItem('token');
         if(token){

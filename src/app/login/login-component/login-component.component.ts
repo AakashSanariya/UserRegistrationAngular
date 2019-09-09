@@ -10,11 +10,21 @@ import {AuthServiceService} from "../../service/auth-service.service";
 export class LoginComponentComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthServiceService) { }
-  spinner;  
+  spinner;
+
+  /*
+  * Remove Edit Id and Token Id and Delete Id
+  * */
   ngOnInit() {
     localStorage.removeItem('editId');
+    localStorage.removeItem('deleteId');
     localStorage.removeItem('token');
   }
+
+  /*
+  * login Credential Success than Set Token and
+   * Navigate to Dashboard
+  * */
   onSubmit(payLoad){
     this.spinner = true;
     this.authService.login(payLoad).subscribe(data => {

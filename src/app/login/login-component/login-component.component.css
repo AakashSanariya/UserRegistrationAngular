@@ -90,7 +90,7 @@ h2.active {
 
 /* FORM TYPOGRAPHY*/
 
-input[type=button], input[type=submit], input[type=reset]  {
+.icons,input[type=button], input[type=submit], input[type=reset]  {
     background-color: #56baed;
     border: none;
     color: white;

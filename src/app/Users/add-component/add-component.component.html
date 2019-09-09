@@ -30,14 +30,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="registerForm.email" placeholder="Your Email *" required email>
-                                <div *ngIf="registerForm.submitted && email.invalid" class="alert alert-danger">
-                                    <div *ngIf="email.errors?.required" ngClass="email.errors.required">Email Address is required</div>
-                                    <div *ngIf="email.errors?.email" ngClass="email.errors.email">Enter valid Email Address</div>
-                                </div>
+                                    <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="registerForm.email" placeholder="Your Email *" required email>
+                                    <div *ngIf="registerForm.submitted && email.invalid" class="alert alert-danger">
+                                        <div *ngIf="email.errors?.required" ngClass="email.errors.required">Email Address is required</div>
+                                        <div *ngIf="email.errors?.email" ngClass="email.errors.email">Enter valid Email Address</div>
+                                    </div>
                             </div>
                             <div class="form-group">
-                                <input type="file" name="file" id="file" class="upload" #image="ngModel" [(ngModel)]="registerForm.image" (change)="fileUpload($event)" required/>
+                                <input type="file" name="file" id="file" class="upload" #image="ngModel" [(ngModel)]="registerForm.image" (change)="fileUpload($event)" required><span class="file-custom"></span>
                                 <div *ngIf="registerForm.submitted && image.invalid" class="alert alert-danger">
                                     <div ngClass="image.errors?.required">Please Select Image</div>
                                 </div>

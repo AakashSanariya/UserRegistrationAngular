@@ -16,6 +16,9 @@ export class AddComponentComponent implements OnInit {
   ngOnInit() {
   }
 
+  /*
+  * File Uploading When User Select
+  * */
   fileUpload(event){
     if(event.target.files.length > 0){
       this.image= event.target.files[0];
@@ -24,6 +27,10 @@ export class AddComponentComponent implements OnInit {
     }
   }
 
+  /*
+  * Submit User Registration Details and Store it
+  * With User Image In Http Passed as a Form Data
+  * */
   onSubmit(userData){
     this.spinner = true;
     const payLoad = new FormData();

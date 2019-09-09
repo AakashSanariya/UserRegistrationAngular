@@ -24,6 +24,9 @@ export class NavBarComponent implements OnInit {
     }
   }
 
+  /*
+  * Remove Token And Logout 
+  * */
   logOut(){
     this.authService.logOut();
   }

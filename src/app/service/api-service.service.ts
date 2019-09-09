@@ -10,6 +10,10 @@ import {ApiResponse} from "../Model/api-response";
 export class ApiServiceService {
 
   constructor(private router: Router, private http: HttpClient) { }
+
+  /*
+  * Api Base Url
+  * */
   baseUrl = "http://api.userregistration.com/api/";
 
   /*New User Register*/
@@ -34,6 +38,10 @@ export class ApiServiceService {
     return this.http.get<ApiResponse>(this.baseUrl + 'user/' + payLoad);
   }
 
+
+  /*
+  * Update User Details
+  * */
   updateDetails(payLoad):Observable<ApiResponse>{
     let id = localStorage.getItem('editId');
     return this.http.post<ApiResponse>(this.baseUrl + 'user/update/' + id, payLoad);

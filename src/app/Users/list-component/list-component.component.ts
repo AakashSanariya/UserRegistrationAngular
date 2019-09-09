@@ -16,6 +16,11 @@ export class ListComponentComponent implements OnInit {
   userDetails = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
+
+  /*
+  * When Page Render At that time User Details Listing
+  * and Filling in Data Table
+  * */
   ngOnInit() {
     this.apiService.userList().subscribe(result => {
       this.spinner = false;
@@ -51,6 +56,7 @@ export class ListComponentComponent implements OnInit {
 
   /*
   * Edit User Details
+  * and Navigate to Edit User Page
   */
   editUser(userDetails){
     localStorage.setItem('editId', userDetails.id);

@@ -16,6 +16,11 @@ export class EditComponentComponent implements OnInit {
   spinner = true;
   image;
   oldImage;
+
+  /*
+  * When page Load User Details Fetch
+  * as per user Id And Put in Form as a
+  * */
   ngOnInit() {
     let userId = localStorage.getItem('editId');
     /* Set User Details by it's Id for that call api*/
@@ -39,12 +44,19 @@ export class EditComponentComponent implements OnInit {
     }
   }
 
+  /*
+  * Image Upload When User Select New One
+  * */
   fileUpload(event){
     if(event.target.files.length > 0){
       this.image= event.target.files[0];
     }
   }
 
+
+  /*
+  * Edit Form Submit Value And Update User Details
+  * */
   onSubmit(userData){
     const payLoad = new FormData();
     this.spinner = true;

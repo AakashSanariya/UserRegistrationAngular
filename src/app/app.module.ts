@@ -13,6 +13,7 @@ import { NavBarComponent } from './navbar/nav-bar/nav-bar.component';
 import { ListComponentComponent } from './Users/list-component/list-component.component';
 import { AddComponentComponent } from './Users/add-component/add-component.component';
 import { EditComponentComponent } from './Users/edit-component/edit-component.component';
+import {AngularFontAwesomeModule} from "angular-font-awesome/dist/angular-font-awesome";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { EditComponentComponent } from './Users/edit-component/edit-component.co
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    AngularFontAwesomeModule,
   ],
   providers: [ApiServiceService, {provide: HTTP_INTERCEPTORS,
     useClass: Interceptor,
