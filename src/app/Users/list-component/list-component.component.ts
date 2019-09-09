@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {ApiServiceService} from "../../service/api-service.service";
+import {Subject} from "rxjs/index";
 
 @Component({
   selector: 'app-list-component',
@@ -11,30 +12,32 @@ export class ListComponentComponent implements OnInit {
 
   constructor(private router: Router, private apiService: ApiServiceService) { }
 
-  userDetails;
-  dtOptions: DataTables.Settings;
+  spinner=true;
+  userDetails = [];
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   ngOnInit() {
     this.apiService.userList().subscribe(result => {
+      this.spinner = false;
       if(result.meta['status_code'] === 200){
         this.userDetails = result['data'].userDetails;
-        this.dtOptions = {
-          "pagingType": 'full_numbers',
-          "pageLength": 5,
-          "processing": true,
-        };
+        this.dtTrigger.next();
       }
       else{
         alert("!Oops Some Error Occurs");
         this.router.navigate(['/login']);
       }
     });
+
   }
 
   /*
   * Delete User
   */
   deleteUser(userDetails){
+    this.spinner = true;
     this.apiService.deleteUser(userDetails).subscribe(result => {
+      this.spinner = false;
       if(result.meta['status_code'] === 200){
         alert("User Delete Successfully");
         localStorage.removeItem('token');

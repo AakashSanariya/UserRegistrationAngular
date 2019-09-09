@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {ApiServiceService} from "../../service/api-service.service";
-import {NgForm, FormGroup} from "@angular/forms/forms";
+import {ApiResponse} from "../../Model/api-response";
 
 @Component({
   selector: 'app-edit-component',
@@ -11,16 +11,17 @@ import {NgForm, FormGroup} from "@angular/forms/forms";
 export class EditComponentComponent implements OnInit {
 
   constructor(private router: Router, private apiService: ApiServiceService) { }
-  updateForm: Object;
-  editForm: NgForm;
+  updateForm = new ApiResponse();
+  editForm: ApiResponse;
+  spinner = true;
   image;
   oldImage;
   ngOnInit() {
     let userId = localStorage.getItem('editId');
-
     /* Set User Details by it's Id for that call api*/
     if(userId != null){
       this.apiService.editUser(userId).subscribe(result => {
+        this.spinner = false;
         if(result.meta['status_code'] === 200){
             this.updateForm = result['data'].userDetails;
             this.image = result['data'].userDetails.image;
@@ -28,13 +29,12 @@ export class EditComponentComponent implements OnInit {
           // console.log(this.image);
         }
         else{
-          alert("Details Not Getting");
+          alert("Your Information could not be Find.");
           this.router.navigate(['/login'])
         }
       });
     }
     else{
-      console.log("error");
       this.router.navigate(['/login']);
     }
   }
@@ -47,6 +47,7 @@ export class EditComponentComponent implements OnInit {
 
   onSubmit(userData){
     const payLoad = new FormData();
+    this.spinner = true;
     payLoad.append('firstName', userData.firstName);
     payLoad.append('lastName', userData.lastName);
     payLoad.append('email', userData.email);
@@ -56,7 +57,7 @@ export class EditComponentComponent implements OnInit {
 
     /* Api Call on Service*/
     this.apiService.updateDetails(payLoad).subscribe(result => {
-
+      this.spinner = false;
       if(result.meta['status_code'] === 200){
         alert("Details Update Successfully");
         localStorage.removeItem('editId');

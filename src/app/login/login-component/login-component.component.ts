@@ -10,11 +10,15 @@ import {AuthServiceService} from "../../service/auth-service.service";
 export class LoginComponentComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthServiceService) { }
-
+  spinner;  
   ngOnInit() {
+    localStorage.removeItem('editId');
+    localStorage.removeItem('token');
   }
   onSubmit(payLoad){
+    this.spinner = true;
     this.authService.login(payLoad).subscribe(data => {
+      this.spinner = false;
       if(data != null){
         if(data['data'].token != null){
           localStorage.setItem('token', data['data'].token);

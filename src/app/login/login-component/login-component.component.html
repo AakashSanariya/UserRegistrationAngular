@@ -1,4 +1,11 @@
-<div class="wrapper fadeInDown">
+<div *ngIf="spinner; loaded">
+    <div id="overlay">
+        <div class="spinner"></div>
+        <br/>
+        Loading...
+    </div>
+</div>
+<div class="wrapper fadeInDown" #loaded>
     <div id="formContent">
         <!-- Tabs Titles -->
         <h2 class="active"> Sign In </h2>

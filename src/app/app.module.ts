@@ -6,13 +6,13 @@ import { AppComponent } from './app.component';
 import { LoginComponentComponent } from './login/login-component/login-component.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
+import {DataTablesModule} from "angular-datatables/index";
 import {ApiServiceService} from "./service/api-service.service";
 import {Interceptor} from "./Interceptor/interceptor";
 import { NavBarComponent } from './navbar/nav-bar/nav-bar.component';
 import { ListComponentComponent } from './Users/list-component/list-component.component';
 import { AddComponentComponent } from './Users/add-component/add-component.component';
 import { EditComponentComponent } from './Users/edit-component/edit-component.component';
-import {DataTablesModule} from "angular-datatables/index";
 
 @NgModule({
   declarations: [
@@ -25,10 +25,10 @@ import {DataTablesModule} from "angular-datatables/index";
   ],
   imports: [
     BrowserModule,
+    DataTablesModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
-    DataTablesModule,
   ],
   providers: [ApiServiceService, {provide: HTTP_INTERCEPTORS,
     useClass: Interceptor,

@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 })
 
 export class Interceptor implements HttpInterceptor{
+    spinner;
     intercept(request: HttpRequest<any>, next: HttpHandler):Observable<any>{
         let token = window.localStorage.getItem('token');
         if(token){
@@ -24,11 +25,12 @@ export class Interceptor implements HttpInterceptor{
                 errorMessage = 'Error: ' + error.error.message;
             }
             else{
+                this.spinner = false;
                 errorMessage = 'Error: ' + error.status + ' message: ' + error.message +'!Opps Some Internal Server Error';
             }
             alert(errorMessage);
-            return throwError(errorMessage);
             this.router.navigate(['/login']);
+            return throwError(errorMessage);
             })
         );
     }

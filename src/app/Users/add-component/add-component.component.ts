@@ -12,6 +12,7 @@ export class AddComponentComponent implements OnInit {
   constructor(private router: Router, private apiService: ApiServiceService) { }
 
   image;
+  spinner;
   ngOnInit() {
   }
 
@@ -24,6 +25,7 @@ export class AddComponentComponent implements OnInit {
   }
 
   onSubmit(userData){
+    this.spinner = true;
     const payLoad = new FormData();
     payLoad.append('firstName', userData.firstName);
     payLoad.append('lastName', userData.lastName);
@@ -32,6 +34,7 @@ export class AddComponentComponent implements OnInit {
     payLoad.append('password', userData.password);
     payLoad.append('confirmPassword', userData.confirmPassword);
     this.apiService.registerUser(payLoad).subscribe(result => {
+      this.spinner = false;
       if(result.meta['status_code'] === 422){
         alert("Data Validation Error");
         this.router.navigate(['/register']);
