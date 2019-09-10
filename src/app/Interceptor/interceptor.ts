@@ -32,7 +32,8 @@ export class Interceptor implements HttpInterceptor{
             }
             else{
                 this.spinner = false;
-                errorMessage = 'Error: ' + error.status + ' message: ' + error.message +'!Opps Some Internal Server Error';
+                errorMessage = 'Error: ' + error.status + 'message: ' + error.error.meta.message;
+                // console.log(error.error.meta);
             }
             alert(errorMessage);
             this.router.navigate(['/login']);
