@@ -42,8 +42,8 @@ export class ApiServiceService {
   /*
   * Update User Details
   * */
-  updateDetails(payLoad):Observable<ApiResponse>{
-    let id = localStorage.getItem('editId');
-    return this.http.post<ApiResponse>(this.baseUrl + 'user/update/' + id, payLoad);
+  updateDetails(payLoad,id):Observable<ApiResponse>{
+    let userId = id;
+    return this.http.post<ApiResponse>(this.baseUrl + 'user/update/' + userId, payLoad);
   }
 }

@@ -8,15 +8,21 @@
                 <a class="nav-link" href="#" routerLink="dashboard" routerLinkActive="active"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" routerLink="register" routerLinkActive="active"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
+                <a class="nav-link" href="#" [routerLink]="['register']" routerLinkActive="active"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" routerLink="login" routerLinkActive="active" *ngIf="!logOutButtonDisplay()"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
             </li>
         </ul>
-        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-            <li class="nav-item float-right">
-                <a class="nav-link" href="#" routerLink="logout" routerLinkActive="active" *ngIf="logOutButtonDisplay()" (click)="logOut()">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+
+        <ul class="nav navbar-nav navbar-right ml-auto mt-2 mt-lg-0" *ngIf="logOutButtonDisplay()">
+            <li class="dropdown nav-item">
+                <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#">{{ userName }}<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" routerLink="logout" routerLinkActive="active" (click)="logOut()">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>

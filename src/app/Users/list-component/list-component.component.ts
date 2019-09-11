@@ -37,7 +37,7 @@ export class ListComponentComponent implements OnInit {
   }
 
   /*
-  * Delete User
+  * Delete User Profile
   */
   deleteUser(userDetails){
     this.spinner = true;
@@ -60,6 +60,6 @@ export class ListComponentComponent implements OnInit {
   */
   editUser(userDetails){
     localStorage.setItem('editId', userDetails.id);
-    this.router.navigate(['/edituser']);
+    this.router.navigate(['/register/', userDetails.id]);
   }
 }

@@ -6,12 +6,15 @@ import {AddComponentComponent} from "./Users/add-component/add-component.compone
 import {LoginComponentComponent} from "./login/login-component/login-component.component";
 import {NavBarComponent} from "./navbar/nav-bar/nav-bar.component";
 import {EditComponentComponent} from "./Users/edit-component/edit-component.component";
+import {CommonAddComponentComponent} from "./Users/common-add-component/common-add-component.component";
+import {ParticularUserListComponent} from "./User/particular-user-list/particular-user-list.component";
 
 
 const routes: Routes = [
-  {path: 'dashboard', component: ListComponentComponent, canActivate: [AuthGuardGuard]},
+  {path: 'dashboard', component: ParticularUserListComponent, canActivate: [AuthGuardGuard]},
   {path: 'edituser', component: EditComponentComponent, canActivate: [AuthGuardGuard]},
-  {path: 'register', component: AddComponentComponent},
+  {path: 'register/:id', component: CommonAddComponentComponent},
+  {path: 'register', component: CommonAddComponentComponent},
   {path: 'login', component: LoginComponentComponent},
   {path: 'logout', component: NavBarComponent},
 ];

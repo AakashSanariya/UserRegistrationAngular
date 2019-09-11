@@ -14,6 +14,10 @@ import { ListComponentComponent } from './Users/list-component/list-component.co
 import { AddComponentComponent } from './Users/add-component/add-component.component';
 import { EditComponentComponent } from './Users/edit-component/edit-component.component';
 import {AngularFontAwesomeModule} from "angular-font-awesome/dist/angular-font-awesome";
+import { MustMatchDirective } from './directive/must-match.directive';
+import { CommonAddComponentComponent } from './Users/common-add-component/common-add-component.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { ParticularUserListComponent } from './User/particular-user-list/particular-user-list.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,10 @@ import {AngularFontAwesomeModule} from "angular-font-awesome/dist/angular-font-a
     NavBarComponent,
     ListComponentComponent,
     AddComponentComponent,
-    EditComponentComponent
+    EditComponentComponent,
+    MustMatchDirective,
+    CommonAddComponentComponent,
+    ParticularUserListComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +38,7 @@ import {AngularFontAwesomeModule} from "angular-font-awesome/dist/angular-font-a
     AppRoutingModule,
     FormsModule,
     AngularFontAwesomeModule,
+    NgbModule,
   ],
   providers: [ApiServiceService, {provide: HTTP_INTERCEPTORS,
     useClass: Interceptor,

@@ -33,6 +33,7 @@ export class AddComponentComponent implements OnInit {
   * */
   onSubmit(userData){
     this.spinner = true;
+    console.log(userData);
     const payLoad = new FormData();
     payLoad.append('firstName', userData.firstName);
     payLoad.append('lastName', userData.lastName);

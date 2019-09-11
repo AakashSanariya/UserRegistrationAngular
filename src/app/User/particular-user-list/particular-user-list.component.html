@@ -1,0 +1,19 @@
+<div class="container">
+    <h2>Hii {{ userDetails.firstName + '  ' +userDetails.lastName }}</h2>
+    <div class="card" style="">
+        <img class="card-img-top" src="{{ 'http://192.168.10.184/UserRegistration/public/' +  userDetails.image  }}" alt="Card image" style="width:20%">
+        <div class="card-body">
+            <h5 class="card-title float-left">First Name :- {{ userDetails.firstName }}</h5>
+            <h5 class="card-title">Last Name :- {{ userDetails.lastName }}</h5>
+            <h5 class="card-title">Email :- {{ userDetails.email }}</h5>
+            <h5 class="card-title">Date Of Birth :- {{ userDetails.DOB }}</h5>
+            <h5 class="card-title">Mobile No :- {{ userDetails.mobileNo }}</h5>
+            <h5 class="card-title" *ngIf="userDetails.gender == 1">gender :- Male</h5>
+            <h5 class="card-title" *ngIf="userDetails.gender == 0">gender :- Female</h5>
+
+            <button class="btn btn-warning float-left" (click)="editUser(userDetails)">Edit Details</button>
+            <button class="btn btn-danger float-right" (click)="deleteUser(userDetails)">Delete Profile</button>
+        </div>
+    </div>
+    <br>
+</div>

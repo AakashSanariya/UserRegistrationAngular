@@ -30,8 +30,9 @@ export class LoginComponentComponent implements OnInit {
     this.authService.login(payLoad).subscribe(data => {
       this.spinner = false;
       if(data != null){
-        if(data['data'].token != null){
-          localStorage.setItem('token', data['data'].token);
+        if(data['data'].data.token != null){
+          localStorage.setItem('userId', data['data'].data.userId);
+          localStorage.setItem('token', data['data'].data.token);
           this.router.navigate(['/dashboard']);
         }
         else{

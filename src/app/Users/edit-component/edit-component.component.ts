@@ -66,9 +66,9 @@ export class EditComponentComponent implements OnInit {
     if(this.image != this.oldImage){
       payLoad.append('image', this.image);
     }
-
+    let userId = localStorage.getItem('editId');
     /* Api Call on Service*/
-    this.apiService.updateDetails(payLoad).subscribe(result => {
+    this.apiService.updateDetails(payLoad, userId).subscribe(result => {
       this.spinner = false;
       if(result.meta['status_code'] === 200){
         alert("Details Update Successfully");
