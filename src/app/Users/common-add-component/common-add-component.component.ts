@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiServiceService} from "../../service/api-service.service";
 import {ApiResponse} from "../../Model/api-response";
-import {NgForm} from "@angular/forms";
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 @Component({
   selector: 'app-common-add-component',
   templateUrl: './common-add-component.component.html',
@@ -12,13 +12,8 @@ export class CommonAddComponentComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private apiService: ApiServiceService, private router: Router) { }
   userDetails = new ApiResponse();
-  userForm: NgForm;
-  spinner;
-  updateId;
-  image;
-  oldImage;
-  setNewPassword = true;
-  imageShow = true;
+  spinner; updateId; image; oldImage; setNewPassword = true; imageShow = true; colorTheme = 'theme-dark-blue';
+  bsConfig: Partial<BsDatepickerConfig>;
 
   /*
    * File Uploading When User Select
@@ -40,13 +35,13 @@ export class CommonAddComponentComponent implements OnInit {
   displayNewPassword(){
     this.setNewPassword = false;
   }
-
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       if(params.get('id') == null){
         this.imageShow = false;
         this.setNewPassword = false;
         this.updateId = null;
+        this.bsConfig = Object.assign({ containerClass: this.colorTheme }, { dateInputFormat: 'DD/MM/YYYY' }, { isAnimated: true });
       }
       else{
         this.updateId = params.get('id');
@@ -54,7 +49,8 @@ export class CommonAddComponentComponent implements OnInit {
           this.userDetails = result['data'].userDetails;
           this.image = result['data'].userDetails.image;
           this.oldImage = this.userDetails.image;
-          console.log(this.userDetails);
+          this.bsConfig = Object.assign({ containerClass: this.colorTheme }, { dateInputFormat: 'DD/MM/YYYY' }, { isAnimated: true });
+          this.userDetails.DOB = new Date(this.userDetails.DOB);
         });
       }
     });
@@ -66,16 +62,20 @@ export class CommonAddComponentComponent implements OnInit {
    * */
   onSubmit(userData){
     this.spinner = true;
+
+    /*
+    * For New User Registration
+    * */
     if(this.updateId == null){
-      let date = userData.DOB.year+'-'+userData.DOB.month+'-'+userData.DOB.day;
       const payLoad = new FormData();
+      userData.DOB = new Date(userData.DOB);
       payLoad.append('firstName', userData.firstName);
       payLoad.append('lastName', userData.lastName);
       payLoad.append('email', userData.email);
       payLoad.append('image', this.image);
       payLoad.append('mobileNo', userData.mobileNo);
       payLoad.append('gender', userData.gender);
-      payLoad.append('DOB', date);
+      payLoad.append('DOB', userData.DOB);
       payLoad.append('password', userData.password);
       payLoad.append('confirmPassword', userData.confirmPassword);
       this.apiService.registerUser(payLoad).subscribe(result => {
@@ -92,16 +92,22 @@ export class CommonAddComponentComponent implements OnInit {
       });
     }
 
+    /*
+    * For Update Details
+    * */
     else{
-      let date = userData.DOB.year+'-'+userData.DOB.month+'-'+userData.DOB.day;
       const payLoad = new FormData();
+      this.bsConfig = Object.assign({ dateInputFormat: 'DD/MM/YYYY' });
+      userData.DOB = new Date(userData.DOB);
+      console.log(userData.DOB);
       this.spinner = true;
       payLoad.append('firstName', userData.firstName);
       payLoad.append('lastName', userData.lastName);
       payLoad.append('email', userData.email);
       payLoad.append('mobileNo', userData.mobileNo);
       payLoad.append('gender', userData.gender);
-      payLoad.append('DOB', date);
+      payLoad.append('DOB', userData.DOB);
+      payLoad.append('password', userData.password);
       if(this.image != this.oldImage){
         payLoad.append('image', this.image);
       }

@@ -11,7 +11,8 @@ import {ApiResponse} from "../../Model/api-response";
 export class ParticularUserListComponent implements OnInit {
 
   constructor(private router: Router, private apiService: ApiServiceService) { }
-  userDetails: ApiResponse;
+  userDetails = new ApiResponse();
+  spinner;
   ngOnInit() {
     let UserId = localStorage.getItem('userId');
     this.apiService.editUser(UserId).subscribe(result => {
@@ -24,7 +25,6 @@ export class ParticularUserListComponent implements OnInit {
    * and Navigate to Edit User Page
    */
   editUser(userDetails){
-    localStorage.setItem('editId', userDetails.id);
     this.router.navigate(['/register/', userDetails.id]);
   }
 

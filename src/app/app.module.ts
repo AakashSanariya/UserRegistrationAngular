@@ -16,8 +16,10 @@ import { EditComponentComponent } from './Users/edit-component/edit-component.co
 import {AngularFontAwesomeModule} from "angular-font-awesome/dist/angular-font-awesome";
 import { MustMatchDirective } from './directive/must-match.directive';
 import { CommonAddComponentComponent } from './Users/common-add-component/common-add-component.component';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { ParticularUserListComponent } from './User/particular-user-list/particular-user-list.component';
+import {UserIdleModule} from "angular-user-idle";
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ParticularUserListComponent } from './User/particular-user-list/particu
     AppRoutingModule,
     FormsModule,
     AngularFontAwesomeModule,
-    NgbModule,
+    UserIdleModule.forRoot({idle: 1, timeout: 300, ping: 1}),
+    BsDatepickerModule.forRoot(),
+    BrowserAnimationsModule,
   ],
   providers: [ApiServiceService, {provide: HTTP_INTERCEPTORS,
     useClass: Interceptor,

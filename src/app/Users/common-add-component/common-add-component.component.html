@@ -71,7 +71,9 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true" (click)="DOB.toggle()"></i></div>
                                 </div>
-                                <input type="text" class="form-control"  ngbDatepicker name="DOB" #DOB="ngbDatepicker" [(ngModel)]="userDetails.DOB" (click)="DOB.toggle()" placeholder="yyyy-mm-dd" required>
+                                <input type="text" class="form-control" #DOB="bsDatepicker" bsDatepicker [bsValue]="bsValue" name="DOB" [(ngModel)]="userDetails.DOB"
+                                       placeholder="yyyy-mm-dd" required
+                                       [bsConfig]="bsConfig">
                             </div>
                             <div *ngIf="userForm.submitted && DOB.invalid" class="alert alert-danger">
                                 <div *ngIf="DOB.errors?.required" ngClass="DOB.errors.required">Please Select a Date</div>

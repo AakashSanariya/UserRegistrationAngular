@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthServiceService} from "../../service/auth-service.service";
+import {UserIdleService} from "angular-user-idle";
 
 @Component({
   selector: 'app-login-component',
@@ -9,7 +10,7 @@ import {AuthServiceService} from "../../service/auth-service.service";
 })
 export class LoginComponentComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthServiceService) { }
+  constructor(private router: Router, private authService: AuthServiceService, private userIdle: UserIdleService) { }
   spinner;
 
   /*
@@ -30,6 +31,21 @@ export class LoginComponentComponent implements OnInit {
     this.authService.login(payLoad).subscribe(data => {
       this.spinner = false;
       if(data != null){
+
+        /*
+         * For Timer Start
+         * */
+        this.userIdle.startWatching();
+        this.userIdle.onTimerStart().subscribe(result => {
+          if(result == 300){
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+            alert("Session Expire");
+            this.router.navigate(['login']);
+          }
+        });
+
+
         if(data['data'].data.token != null){
           localStorage.setItem('userId', data['data'].data.userId);
           localStorage.setItem('token', data['data'].data.token);
