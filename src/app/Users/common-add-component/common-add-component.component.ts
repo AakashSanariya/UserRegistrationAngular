@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ApiServiceService} from "../../service/api-service.service";
 import {ApiResponse} from "../../Model/api-response";
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+
 @Component({
   selector: 'app-common-add-component',
   templateUrl: './common-add-component.component.html',
@@ -36,12 +37,12 @@ export class CommonAddComponentComponent implements OnInit {
     this.setNewPassword = false;
   }
   ngOnInit() {
+    this.bsConfig = Object.assign({ dateInputFormat: 'DD/MM/YYYY' }, { containerClass: this.colorTheme }, { isAnimated: true });
     this.route.paramMap.subscribe(params => {
       if(params.get('id') == null){
         this.imageShow = false;
         this.setNewPassword = false;
         this.updateId = null;
-        this.bsConfig = Object.assign({ containerClass: this.colorTheme }, { dateInputFormat: 'DD/MM/YYYY' }, { isAnimated: true });
       }
       else{
         this.updateId = params.get('id');
@@ -49,8 +50,7 @@ export class CommonAddComponentComponent implements OnInit {
           this.userDetails = result['data'].userDetails;
           this.image = result['data'].userDetails.image;
           this.oldImage = this.userDetails.image;
-          this.bsConfig = Object.assign({ containerClass: this.colorTheme }, { dateInputFormat: 'DD/MM/YYYY' }, { isAnimated: true });
-          this.userDetails.DOB = new Date(this.userDetails.DOB);
+          this.bsConfig = Object.assign({ dateInputFormat: 'DD/MM/YYYY' }, { containerClass: this.colorTheme }, { isAnimated: true });
         });
       }
     });
@@ -68,7 +68,7 @@ export class CommonAddComponentComponent implements OnInit {
     * */
     if(this.updateId == null){
       const payLoad = new FormData();
-      userData.DOB = new Date(userData.DOB);
+      userData.DOB = new Date(userData.DOB).toLocaleDateString(); // Convert Date Into Short Date
       payLoad.append('firstName', userData.firstName);
       payLoad.append('lastName', userData.lastName);
       payLoad.append('email', userData.email);
@@ -97,17 +97,17 @@ export class CommonAddComponentComponent implements OnInit {
     * */
     else{
       const payLoad = new FormData();
-      this.bsConfig = Object.assign({ dateInputFormat: 'DD/MM/YYYY' });
-      userData.DOB = new Date(userData.DOB);
-      console.log(userData.DOB);
       this.spinner = true;
+      userData.DOB = new Date(userData.DOB).toLocaleDateString(); // For Convert Date Into Short Date
       payLoad.append('firstName', userData.firstName);
       payLoad.append('lastName', userData.lastName);
       payLoad.append('email', userData.email);
       payLoad.append('mobileNo', userData.mobileNo);
       payLoad.append('gender', userData.gender);
       payLoad.append('DOB', userData.DOB);
-      payLoad.append('password', userData.password);
+      if(userData.password != null && userData.password != ""){  // if new password is set than append to form data
+        payLoad.append('password', userData.password);
+      }
       if(this.image != this.oldImage){
         payLoad.append('image', this.image);
       }

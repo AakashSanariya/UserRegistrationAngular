@@ -1,6 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {AuthServiceService} from "../../service/auth-service.service";
 import {ApiServiceService} from "../../service/api-service.service";
+import {BehaviorSubject} from "rxjs/index";
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,7 +10,7 @@ import {ApiServiceService} from "../../service/api-service.service";
 })
 export class NavBarComponent implements OnInit {
   title = 'User Registration';
-  @Input() userName: string;
+  userName: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private authService: AuthServiceService,private apiService: ApiServiceService) {}
 
