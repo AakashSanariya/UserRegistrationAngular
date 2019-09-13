@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthServiceService} from "../../service/auth-service.service";
 import {UserIdleService} from "angular-user-idle";
+import {ApiServiceService} from "../../service/api-service.service";
 
 @Component({
   selector: 'app-login-component',
@@ -10,7 +11,10 @@ import {UserIdleService} from "angular-user-idle";
 })
 export class LoginComponentComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthServiceService, private userIdle: UserIdleService) { }
+  constructor(private router: Router,
+              private authService: AuthServiceService,
+              private userIdle: UserIdleService
+  ) { }
   spinner;
 
   /*
@@ -39,7 +43,7 @@ export class LoginComponentComponent implements OnInit {
         this.userIdle.onTimerStart().subscribe(result => {
           if(result == 300){
             localStorage.removeItem('token');
-            localStorage.removeItem('userId');
+            localStorage.removeItem('userName');
             alert("Session Expire");
             this.router.navigate(['login']);
           }
@@ -47,6 +51,7 @@ export class LoginComponentComponent implements OnInit {
 
 
         if(data['data'].data.token != null){
+          localStorage.setItem('userName', data['data'].data.userName);
           localStorage.setItem('userId', data['data'].data.userId);
           localStorage.setItem('token', data['data'].data.token);
           this.router.navigate(['/dashboard']);

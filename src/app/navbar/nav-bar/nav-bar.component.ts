@@ -1,7 +1,6 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthServiceService} from "../../service/auth-service.service";
 import {ApiServiceService} from "../../service/api-service.service";
-import {BehaviorSubject} from "rxjs/index";
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,22 +9,24 @@ import {BehaviorSubject} from "rxjs/index";
 })
 export class NavBarComponent implements OnInit {
   title = 'User Registration';
-  userName: BehaviorSubject<any> = new BehaviorSubject(null);
+  userName: string;
 
-  constructor(private authService: AuthServiceService,private apiService: ApiServiceService) {}
+  constructor(private authService: AuthServiceService,private apiService: ApiServiceService) {
+  }
 
   ngOnInit() {
-    let userId = localStorage.getItem('userId');
+    let userName = localStorage.getItem('userName');
     /*
      * For Display User Name In Nav-Bar
      * */
-    if(userId != null){
-      this.apiService.editUser(userId).subscribe(result => {
-        this.userName = result['data'].userDetails.firstName;
-      });
+    if(userName != null){
+      this.userName = userName;
     }
   }
-
+  
+  ngDoCheck(){
+    this.userName = localStorage.getItem('userName');
+  }
   /*Login and Logout Button Display*/
   logOutButtonDisplay(){
     let hastoken = window.localStorage.getItem('token');
@@ -43,4 +44,5 @@ export class NavBarComponent implements OnInit {
   logOut(){
     this.authService.logOut();
   }
+
 }

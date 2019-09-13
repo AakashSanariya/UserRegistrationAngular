@@ -56,10 +56,10 @@
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend" *ngIf="imageShow">
                                     <div class="input-group-text"><i class="fa fa-file-image-o" aria-hidden="true"></i></div>
-                                    <span class="border border-success rounded-lg" style="display: inline-block"><img src="{{'http://192.168.10.184/UserRegistration/public/' +  userDetails.image  }}" width="100px" height="100px"></span>
-                                    <label class="btn btn-danger float-right" (click)="displayImage()">X</label>
+                                    <span class="border border-info ml-1 rounded-lg" style="display: inline-block"><img src="{{'http://192.168.10.184/UserRegistration/public/' +  userDetails.image  }}" width="100px" height="100px"></span>
+                                    <label class="btn btn-danger ml-1" (click)="displayImage()">X</label>
                                 </div>
-                                <input type="file" *ngIf="!imageShow" name="image" id="file" class="upload" [(ngModel)]="userDetails.image" #image="ngModel" (change)="fileUpload($event)" requireFile>
+                                <input type="file" *ngIf="!imageShow" name="image" id="file" class="upload"  (change)="fileUpload($event)" requireFile>
                             </div>
                             <!--<div *ngIf="userForm.submitted && !image.valid" class="alert alert-danger">
                                 <div *ngIf="image.errors?.required" ngClass="image.errors.required">Please Select Image</div>
@@ -71,9 +71,10 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true" (click)="DOB.toggle()"></i></div>
                                 </div>
-                                <input type="text" class="form-control" #DOB="bsDatepicker" bsDatepicker [bsValue]="bsValue" name="DOB" [(ngModel)]="userDetails.DOB"
+                                <input type="text" class="form-control" #DOB="bsDatepicker"  bsDatepicker triggers="focus" [bsValue]="bsValue" name="DOB" [(ngModel)]="userDetails.DOB"
                                        placeholder="DD/MM/YYYY" required
-                                       [bsConfig]="bsConfig">
+                                       [bsConfig]="bsConfig"
+                                >
                             </div>
                             <div *ngIf="userForm.submitted && DOB.invalid" class="alert alert-danger">
                                 <div *ngIf="DOB.errors?.required" ngClass="DOB.errors.required">Please Select a Date</div>

@@ -11,7 +11,9 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 })
 export class CommonAddComponentComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private apiService: ApiServiceService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private apiService: ApiServiceService, private router: Router) {
+    this.bsConfig = Object.assign({ dateInputFormat: 'DD/MM/YYYY' }, { containerClass: this.colorTheme }, { isAnimated: true });
+  }
   userDetails = new ApiResponse();
   spinner; updateId; image; oldImage; setNewPassword = true; imageShow = true; colorTheme = 'theme-dark-blue';
   bsConfig: Partial<BsDatepickerConfig>;
@@ -50,7 +52,6 @@ export class CommonAddComponentComponent implements OnInit {
           this.userDetails = result['data'].userDetails;
           this.image = result['data'].userDetails.image;
           this.oldImage = this.userDetails.image;
-          this.bsConfig = Object.assign({ dateInputFormat: 'DD/MM/YYYY' }, { containerClass: this.colorTheme }, { isAnimated: true });
         });
       }
     });
