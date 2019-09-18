@@ -8,6 +8,9 @@
                 <a class="nav-link" href="#" routerLink="dashboard" routerLinkActive="active"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="#" routerLink="listuser" routerLinkActive="active" *ngIf="isAdmin"><i class="fa fa-list" aria-hidden="true"></i> List User</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#" [routerLink]="['register']" routerLinkActive="active"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
             </li>
             <li class="nav-item">

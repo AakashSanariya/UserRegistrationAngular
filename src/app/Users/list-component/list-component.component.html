@@ -16,6 +16,7 @@
                 <th>Last Name</th>
                 <th>Email Address</th>
                 <th>Image</th>
+                <th>Approve/Reject</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -27,6 +28,8 @@
                 <td>{{ user['lastName'] }}</td>
                 <td>{{ user['email'] }}</td>
                 <td><img src="{{'http://192.168.10.184/UserRegistration/public/' +  user['image']  }}" width="50px" height="50px" class="rounded-pill"></td>
+                <td *ngIf="user['status'] == 0"><button class="btn btn-info" (click)="approve(user)">Activate</button></td>
+                <td *ngIf="user['status'] == 1"><button class="btn btn-danger" (click)="approve(user)">DeActivate</button></td>
                 <td><button class="btn btn-warning" (click)="editUser(user)">Edit</button></td>
                 <td><button class="btn btn-danger" (click)="deleteUser(user)">Delete</button></td>
             </tr>

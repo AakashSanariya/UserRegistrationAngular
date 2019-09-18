@@ -28,10 +28,13 @@
                             </div><br><br>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button class="btn btn-warning pull-left" (click)="editUser(userDetails)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Details</button>
+                                    <button class="btn btn-warning pull-left" *ngIf="userDetails.status == 1" (click)="editUser(userDetails)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Details</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <button class="btn btn-danger pull-right" (click)="deleteUser(userDetails)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete Profile</button>
+                                    <button class="btn btn-danger pull-right" *ngIf="userDetails.status == 1" (click)="deleteUser(userDetails)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete Profile</button>
+                                </div>
+                                <div class="col alert alert-warning" *ngIf="userDetails.status == 0">
+                                    <h5>Wait for Admin Approval After Edit Or Delete Your Profile</h5>
                                 </div>
                             </div>
                         </div>

@@ -62,4 +62,27 @@ export class ListComponentComponent implements OnInit {
     localStorage.setItem('editId', userDetails.id);
     this.router.navigate(['/register/', userDetails.id]);
   }
+  
+  /*
+  * Approve User Or DisApprove User
+  * */
+  approve(userDetails){
+
+    if(userDetails.status == "0"){
+      userDetails.status = "1";
+    }
+    else{
+      userDetails.status = "0";
+    }
+    let payload = new FormData();
+    payload.append('status', userDetails.status);
+    this.apiService.updateDetails(payload, userDetails.id).subscribe(result => {
+      if(userDetails.status == "1"){
+        alert("User Activate Successfully")
+      }
+      if(userDetails.status == "0"){
+        alert("User DeActivate Successfully")
+      }
+    })
+  }
 }

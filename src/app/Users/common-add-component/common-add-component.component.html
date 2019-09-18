@@ -18,10 +18,11 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-user-circle-o" aria-hidden="true"></i></div>
                                     </div>
-                                        <input type="text" class="form-control" name="firstName" #firstName="ngModel" [(ngModel)]="userDetails.firstName" placeholder="Enter First Name" required minlength="3">
+                                        <input type="text" class="form-control" name="firstName" #firstName="ngModel" [(ngModel)]="userDetails.firstName" placeholder="Enter First Name" pattern="[a-zA-Z ]*" required minlength="3">
                                 </div>
                                 <div *ngIf="userForm.submitted && firstName.invalid" class="alert alert-danger">
                                     <div *ngIf="firstName.errors?.required">First Name is Required</div>
+                                    <div *ngIf="firstName.errors?.pattern" ngClass="firstName.errors.pattern">First Name Should contain Only Small And Capital Character</div>
                                     <div *ngIf="firstName.errors?.minlength" ngClass="firstName.errors.minlength">First Name Should be Minimum 3 Character</div>
                                 </div>
                             </div>
@@ -30,10 +31,11 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-user-circle-o" aria-hidden="true"></i></div>
                                     </div>
-                                    <input type="text" class="form-control"  name="lastName" #lastName="ngModel" [(ngModel)]="userDetails.lastName" placeholder="Enter Last Name" required minlength="3">
+                                    <input type="text" class="form-control"  name="lastName" #lastName="ngModel" [(ngModel)]="userDetails.lastName" placeholder="Enter Last Name" pattern="[a-zA-Z ]*" required minlength="3">
                                 </div>
                                 <div *ngIf="userForm.submitted && lastName.invalid" class="alert alert-danger">
                                     <div *ngIf="lastName.errors?.required" ngClass="lastName.errors.required">Last Name is Required</div>
+                                    <div *ngIf="lastName.errors?.pattern" ngClass="lastName.errors.pattern">Last Name Should Contain Only Small and Capital Characters.</div>
                                     <div *ngIf="lastName.errors?.minlength" ngClass="lastName.errors.minlength">Last Name Should be Minimum 3 Character</div>
                                 </div>
                             </div>
@@ -44,11 +46,11 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-envelope-o"></i></div>
                                 </div>
-                                <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="userDetails.email" placeholder="Enter Email Address" required email>
+                                <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="userDetails.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Enter Email Address" required email>
                             </div>
                             <div *ngIf="userForm.submitted && email.invalid" class="alert alert-danger">
                                 <div *ngIf="email.errors?.required" ngClass="email.errors.required">Email is Required</div>
-                                <div *ngIf="email.errors?.email" ngClass="email.errors.minlength">Email Should Be Valid</div>
+                                <div *ngIf="email.errors?.pattern" ngClass="email.errors.pattern">Email Should Be Valid</div>
                             </div>
                         </div>
 
@@ -71,13 +73,14 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true" (click)="DOB.toggle()"></i></div>
                                 </div>
-                                <input type="text" class="form-control" #DOB="bsDatepicker"  bsDatepicker triggers="focus" [bsValue]="bsValue" name="DOB" [(ngModel)]="userDetails.DOB"
-                                       placeholder="DD/MM/YYYY" required
+                                <input type="text" class="form-control" #DOB="bsDatepicker"  bsDatepicker  [bsValue]="bsValue" name="DOB" [(ngModel)]="userDetails.DOB"
+                                       placeholder="DD/MM/YYYY"
                                        [bsConfig]="bsConfig"
+                                       required
                                 >
                             </div>
                             <div *ngIf="userForm.submitted && DOB.invalid" class="alert alert-danger">
-                                <div *ngIf="DOB.errors?.required" ngClass="DOB.errors.required">Please Select a Date</div>
+                                <div ngClass="DOB.errors.required">Please Select a Date</div>
                             </div>
                         </div>
 
@@ -124,11 +127,12 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></div>
                                     </div>
-                                    <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="userForm.password" placeholder="Enter Password" required minlength="6">
+                                    <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="userForm.password" placeholder="Enter Password" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%])(?=[^^&*()_\+]*$).{6,}" required minlength="6">
                                 </div>
                                 <div *ngIf="userForm.submitted && password.invalid" class="alert alert-danger">
                                     <div *ngIf="password.errors?.required" ngClass="password.errors.required">Password is Required</div>
                                     <div *ngIf="password.errors?.required" ngClass="password.errors.minlength">Password Length Should be minimum 6 character</div>
+                                    <div *ngIf="password.errors?.pattern" ngClass="password.errors.pattern">Password Contain a One Small and Capital And number and special character not Contain ^&*()_+</div>
                                 </div>
                             </div>
                             <div class="form-group col-md">
@@ -136,11 +140,12 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-key" aria-hidden="true"></i></div>
                                     </div>
-                                    <input type="password" class="form-control" name="confirmPassword" #confirmPassword="ngModel" [(ngModel)]="userForm.confirmPassword" placeholder="Enter Confirm Password" required minlength="6">
+                                    <input type="password" class="form-control" name="confirmPassword" #confirmPassword="ngModel" [(ngModel)]="userForm.confirmPassword" placeholder="Enter Confirm Password" required minlength="6" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%])(?=[^^&*()_\+]*$).{6,}">
                                 </div>
                                 <div *ngIf="userForm.submitted && confirmPassword.invalid" class="alert alert-danger">
                                     <div *ngIf="confirmPassword.errors?.required" ngClass="confirmPassword.errors.required">Confirm Password is Required</div>
                                     <div *ngIf="confirmPassword.errors?.required" ngClass="confirmPassword.errors.minlength">Confirm Pasword Length Should be minimum 6 character</div>
+                                    <div *ngIf="password.errors?.pattern" ngClass="password.errors.pattern">Password Contain a One Small and Capital And number and special character not Contain ^&*()_+</div>
                                     <div *ngIf="confirmPassword.errors?.mustMatch" ngClass="confirmPassword.errors.mustMatch">Confirm Pasword  and Password are Not Matched</div>
                                 </div>
                             </div>

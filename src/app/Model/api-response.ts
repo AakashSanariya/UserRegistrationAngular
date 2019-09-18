@@ -9,6 +9,8 @@ export class ApiResponse {
     mobileNo: string;
     confirmPassword: string;
     meta: string;
+    role: string;
+    status: number;
     userDetails: string;
 
 }

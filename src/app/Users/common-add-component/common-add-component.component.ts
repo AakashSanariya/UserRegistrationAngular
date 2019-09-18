@@ -11,7 +11,9 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 })
 export class CommonAddComponentComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private apiService: ApiServiceService, private router: Router) {
+  constructor(private route: ActivatedRoute,
+              private apiService: ApiServiceService,
+              private router: Router) {
     this.bsConfig = Object.assign({ dateInputFormat: 'DD/MM/YYYY' }, { containerClass: this.colorTheme }, { isAnimated: true });
   }
   userDetails = new ApiResponse();
@@ -79,6 +81,8 @@ export class CommonAddComponentComponent implements OnInit {
       payLoad.append('DOB', userData.DOB);
       payLoad.append('password', userData.password);
       payLoad.append('confirmPassword', userData.confirmPassword);
+      payLoad.append('role', 'User'); // static Role of User
+      payLoad.append('status', '0'); // By Default Status is In Activate
       this.apiService.registerUser(payLoad).subscribe(result => {
         this.spinner = false;
         if(result.meta['status_code']=== 200){
@@ -129,12 +133,4 @@ export class CommonAddComponentComponent implements OnInit {
     }
   }
 
-  /*
-  * Update User Details When Click
-  * On Update
-  * */
-  /*onUpdate(userData){
-    console.log("hii");
-
-  }*/
 }

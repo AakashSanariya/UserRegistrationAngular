@@ -24,6 +24,7 @@
     "angular-font-awesome": "^3.1.2",
     "angular-user-idle": "^2.1.4",
     "bootstrap": "^4.3.1",
+    "country-state-city": "^1.0.0",
     "datatables.net": "^1.10.19",
     "datatables.net-bs4": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
