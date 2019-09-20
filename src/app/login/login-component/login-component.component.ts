@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthServiceService} from "../../service/auth-service.service";
-import {UserIdleService} from "angular-user-idle";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -13,7 +12,6 @@ export class LoginComponentComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthServiceService,
-              private userIdle: UserIdleService,
               private toaster: ToastrService
   ) { }
   spinner: boolean;
@@ -38,19 +36,6 @@ export class LoginComponentComponent implements OnInit {
       this.toaster.success('Login Successfully');
       this.spinner = false;
       if(data != null){
-
-        /*
-         * For Timer Start
-         * */
-        this.userIdle.startWatching();
-        this.userIdle.onTimerStart().subscribe(result => {
-          if(result == 3){
-            this.toaster.warning('Session Expire');
-            this.authService.logOut();
-          }
-        });
-
-
         if(data['data'].data.token != null){
           localStorage.setItem('userName', data['data'].data.userName); // set User Name
           localStorage.setItem('userId', data['data'].data.userId); // set User Id

@@ -42,7 +42,7 @@ import {ToastrModule} from "ngx-toastr";
     AppRoutingModule,
     FormsModule,
     AngularFontAwesomeModule,
-    UserIdleModule.forRoot({idle: 1, timeout: 3, ping: 1}),
+    UserIdleModule.forRoot({idle: 1, timeout: 5, ping: 1}),
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
