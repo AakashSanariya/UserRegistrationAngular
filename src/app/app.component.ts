@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
               private authService: AuthServiceService
   ){}
 
-  ngDoCheck(){
+  ngOnInit(){
     /*
      * For Timer Start
      * */
