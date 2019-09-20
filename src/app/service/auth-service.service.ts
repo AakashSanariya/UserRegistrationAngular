@@ -1,25 +1,23 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {Observable, BehaviorSubject} from "rxjs/index";
 import {ApiResponse} from "../Model/api-response";
-import {map} from "rxjs/internal/operators/map";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServiceService {
 
-  constructor(private router: Router, private http:HttpClient) {
-    
-    /* Role Get Form Local Storage*/
-    this.userRolePerDetails = new BehaviorSubject(localStorage.getItem('role'));
-    this.userRole = this.userRolePerDetails.asObservable();
-  }
   userDetails: Observable<ApiResponse>;
-  userRolePerDetails: BehaviorSubject<any>;
-  userRole: Observable<any>;
+  userRoleBehaviour: BehaviorSubject<any>;
   baseUrl = "http://api.userregistration.com/api/";
+
+  constructor(private router: Router, private http:HttpClient) {
+
+    /* Role Get Form Local Storage*/
+    this.userRoleBehaviour = new BehaviorSubject(localStorage.getItem('role'));
+  }
 
   /* For Login */
   login(loginPayload):Observable<ApiResponse>{
@@ -28,8 +26,7 @@ export class AuthServiceService {
   }
 
   public get currentUserRole():any{
-    // console.log(this.userRolePerDetails.value);
-    return this.userRolePerDetails.value;
+    return this.userRoleBehaviour;
   }
 
   /*For LogOut*/

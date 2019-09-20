@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {ApiServiceService} from "../../service/api-service.service";
 import {Subject} from "rxjs/index";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-list-component',
@@ -10,10 +11,13 @@ import {Subject} from "rxjs/index";
 })
 export class ListComponentComponent implements OnInit {
 
-  constructor(private router: Router, private apiService: ApiServiceService) { }
+  constructor(private router: Router,
+              private apiService: ApiServiceService,
+              private toaster: ToastrService
+  ) { }
 
-  spinner=true;
-  userDetails = [];
+  spinner: boolean = true;
+  userDetails: any = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
@@ -25,13 +29,17 @@ export class ListComponentComponent implements OnInit {
     this.apiService.userList().subscribe(result => {
       this.spinner = false;
       if(result.meta['status_code'] === 200){
+        this.toaster.success('User Listing Successfully');
         this.userDetails = result['data'].userDetails;
         this.dtTrigger.next();
       }
       else{
-        alert("!Oops Some Error Occurs");
+        this.toaster.error('!Oops Some Error Occurs');
         this.router.navigate(['/login']);
       }
+    }, error => {
+      this.spinner = false;
+      this.toaster.error(error);
     });
 
   }
@@ -44,13 +52,15 @@ export class ListComponentComponent implements OnInit {
     this.apiService.deleteUser(userDetails).subscribe(result => {
       this.spinner = false;
       if(result.meta['status_code'] === 200){
-        alert("User Delete Successfully");
+        this.toaster.success('User Delete Successfully');
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
       }
       else{
-        alert("!Opps Some Error Occurs While User Delete");
+        this.toaster.error('!Opps Some Error Occurs While User Delete');
       }
+    }, error => {
+      this.toaster.error(error);
     });
   }
 
@@ -67,7 +77,6 @@ export class ListComponentComponent implements OnInit {
   * Approve User Or DisApprove User
   * */
   approve(userDetails){
-
     if(userDetails.status == "0"){
       userDetails.status = "1";
     }
@@ -78,11 +87,14 @@ export class ListComponentComponent implements OnInit {
     payload.append('status', userDetails.status);
     this.apiService.updateDetails(payload, userDetails.id).subscribe(result => {
       if(userDetails.status == "1"){
-        alert("User Activate Successfully")
+        this.toaster.success("User Activate Successfully");
       }
       if(userDetails.status == "0"){
-        alert("User DeActivate Successfully")
+        this.toaster.success('User DeActivate Successfully');
       }
-    })
+    }, error => {
+      this.spinner = false;
+      this.toaster.error(error);
+    });
   }
 }

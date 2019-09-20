@@ -20,6 +20,8 @@ import { ParticularUserListComponent } from './User/particular-user-list/particu
 import {UserIdleModule} from "angular-user-idle";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AuthServiceService} from "./service/auth-service.service";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -40,13 +42,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     FormsModule,
     AngularFontAwesomeModule,
-    UserIdleModule.forRoot({idle: 1, timeout: 300, ping: 1}),
+    UserIdleModule.forRoot({idle: 1, timeout: 3, ping: 1}),
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [ApiServiceService, {provide: HTTP_INTERCEPTORS,
     useClass: Interceptor,
-    multi : true}],
+    multi : true}, AuthServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

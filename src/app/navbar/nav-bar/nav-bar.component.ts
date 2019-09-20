@@ -1,35 +1,31 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AuthServiceService} from "../../service/auth-service.service";
-import {ApiServiceService} from "../../service/api-service.service";
-import {BehaviorSubject, Observable} from "rxjs/index";
 import {Role} from "../../Model/role.enum";
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.css']
+  styleUrls: ['./nav-bar.component.css'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class NavBarComponent implements OnInit {
   title = 'User Registration';
   userName: string;
   userRole: any;
-  constructor(private authService: AuthServiceService,private apiService: ApiServiceService) {
+  constructor(private authService: AuthServiceService) {
   }
 
   ngOnInit() {
-    this.userRole = this.authService.currentUserRole;
-    let userName = localStorage.getItem('userName');
-    /*
-     * For Display User Name In Nav-Bar
-     * */
-    if(userName != null){
-      this.userName = userName;
-    }
+    this.userRole=this.authService.currentUserRole;
+    this.userRole = localStorage.getItem('role');
+    this.userName = localStorage.getItem('userName');
   }
 
   ngDoCheck(){
-    this.userRole = localStorage.getItem('role');
-    this.userName = localStorage.getItem('userName');
+    if(this.userName != localStorage.getItem('userName') || this.userRole != localStorage.getItem('role')){
+      this.userName = localStorage.getItem('userName');
+      this.userRole = localStorage.getItem('role');
+    }
   }
 
   public get isAdmin(){
@@ -51,7 +47,10 @@ export class NavBarComponent implements OnInit {
   * Remove Token And Logout 
   * */
   logOut(){
+    this.ngOnDestroy();
     this.authService.logOut();
   }
 
+  ngOnDestroy(){
+  }
 }

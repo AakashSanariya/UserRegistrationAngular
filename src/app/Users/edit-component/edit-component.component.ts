@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {ApiServiceService} from "../../service/api-service.service";
 import {ApiResponse} from "../../Model/api-response";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-edit-component',
@@ -10,12 +11,14 @@ import {ApiResponse} from "../../Model/api-response";
 })
 export class EditComponentComponent implements OnInit {
 
-  constructor(private router: Router, private apiService: ApiServiceService) { }
-  updateForm = new ApiResponse();
-  editForm: ApiResponse;
-  spinner = true;
-  image;
-  oldImage;
+  constructor(private router: Router,
+              private apiService: ApiServiceService,
+              private toaster: ToastrService
+  ) { }
+  updateForm: any = new ApiResponse();
+  spinner: boolean = true;
+  image: any;
+  oldImage: any;
 
   /*
   * When page Load User Details Fetch
@@ -31,12 +34,14 @@ export class EditComponentComponent implements OnInit {
             this.updateForm = result['data'].userDetails;
             this.image = result['data'].userDetails.image;
             this.oldImage = result['data'].userDetails.image;
-          // console.log(this.image);
         }
         else{
-          alert("Your Information could not be Find.");
+          this.toaster.error('Your Information could not be Find.');
           this.router.navigate(['/login'])
         }
+      }, error => {
+        this.spinner = false;
+        this.toaster.error(error);
       });
     }
     else{
@@ -50,6 +55,7 @@ export class EditComponentComponent implements OnInit {
   fileUpload(event){
     if(event.target.files.length > 0){
       this.image= event.target.files[0];
+      this.toaster.success("Image Upload Successfully");
     }
   }
 
@@ -71,21 +77,24 @@ export class EditComponentComponent implements OnInit {
     this.apiService.updateDetails(payLoad, userId).subscribe(result => {
       this.spinner = false;
       if(result.meta['status_code'] === 200){
-        alert("Details Update Successfully");
+        this.toaster.success('Details Update Successfully');
         localStorage.removeItem('editId');
         this.router.navigate(['/dashboard']);
       }
       else{
-        alert("!Opps Some Error Occurs while Update Details");
+        this.toaster.error('!Opps Some Error Occurs while Update Details');
         localStorage.removeItem('editId');
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
       }
+    }, error => {
+      this.spinner = false;
+      this.toaster.error(error);
     });
   }
 
   /*For Display Image At Update If user Not Changed*/
-  imageShow = true;
+  imageShow: boolean = true;
   displayImage(){
     this.imageShow = false;
   }

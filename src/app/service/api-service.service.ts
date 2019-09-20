@@ -43,7 +43,7 @@ export class ApiServiceService {
   * Update User Details
   * */
   updateDetails(payLoad,id):Observable<ApiResponse>{
-    let userId = id;
+    let userId: number = id;
     return this.http.post<ApiResponse>(this.baseUrl + 'user/update/' + userId, payLoad);
   }
 }

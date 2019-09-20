@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthServiceService} from "../../service/auth-service.service";
 import {UserIdleService} from "angular-user-idle";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login-component',
@@ -12,13 +13,15 @@ export class LoginComponentComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthServiceService,
-              private userIdle: UserIdleService
+              private userIdle: UserIdleService,
+              private toaster: ToastrService
   ) { }
-  spinner;
-
+  spinner: boolean;
+  
   /*
-  * Remove Edit Id and Token Id and Delete Id
+  * Remove Old Edit Id and Token Id and Delete Id
   * */
+  
   ngOnInit() {
     localStorage.removeItem('editId');
     localStorage.removeItem('deleteId');
@@ -32,6 +35,7 @@ export class LoginComponentComponent implements OnInit {
   onSubmit(payLoad){
     this.spinner = true;
     this.authService.login(payLoad).subscribe(data => {
+      this.toaster.success('Login Successfully');
       this.spinner = false;
       if(data != null){
 
@@ -40,11 +44,9 @@ export class LoginComponentComponent implements OnInit {
          * */
         this.userIdle.startWatching();
         this.userIdle.onTimerStart().subscribe(result => {
-          if(result == 300){
-            localStorage.removeItem('token');
-            localStorage.removeItem('userName');
-            alert("Session Expire");
-            this.router.navigate(['login']);
+          if(result == 3){
+            this.toaster.warning('Session Expire');
+            this.authService.logOut();
           }
         });
 
@@ -57,15 +59,18 @@ export class LoginComponentComponent implements OnInit {
           this.router.navigate(['/dashboard']);
         }
         else{
-          alert("!Opps Login Access Is Not Allowed");
+          this.toaster.error("!Opps Login Access Is Not Allowed");
           this.router.navigate(['/login']);
         }
       }
       else{
-        alert("!Opps Some Error Occurs While Login");
+        this.toaster.error("!Opps Some Error Occurs While Login");
         this.router.navigate(['/login']);
       }
+    },
+    error => {
+      this.spinner = false;
+      this.toaster.error(error);
     });
   }
-
 }

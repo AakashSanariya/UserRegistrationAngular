@@ -10,9 +10,6 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <h3 class="register-heading">User Registration Form</h3>
-                <!--<form method="POST" enctype="multipart/form-data" #registerForm="ngForm" id="registration-form" (ngSubmit)="registerForm.form.valid && onSubmit(registerForm.value)" [mustMatch]="['password', 'confirmPassword']" novalidate>
-                    <app-common-add-component></app-common-add-component>
-                </form>-->
                 <form method="POST" enctype="multipart/form-data" #registerForm="ngForm" id="registration-form" (ngSubmit)="registerForm.form.valid && onSubmit(registerForm.value)" [mustMatch]="['password', 'confirmPassword']" novalidate>
                     <div class="row register-form">
                         <div class="col-md-12">

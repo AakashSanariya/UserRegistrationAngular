@@ -1,4 +1,4 @@
-import {Component, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs/index";
 import {catchError} from "rxjs/internal/operators/catchError";
@@ -9,7 +9,6 @@ import {Router} from "@angular/router";
 })
 
 export class Interceptor implements HttpInterceptor{
-    spinner;
 
     /*
     * Set a every Request Authorization
@@ -31,11 +30,8 @@ export class Interceptor implements HttpInterceptor{
                 errorMessage = 'Error: ' + error.error.message;
             }
             else{
-                this.spinner = false;
-                errorMessage = 'Error: ' + error.status + 'message: ' + error.error.meta.message;
-                // console.log(error.error.meta);
+                errorMessage = 'Error: ' + error.status + ' ' + error.error.meta.message;
             }
-            alert(errorMessage);
             this.router.navigate(['/login']);
             return throwError(errorMessage);
             })

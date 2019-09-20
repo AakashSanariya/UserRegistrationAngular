@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ApiServiceService} from "../../service/api-service.service";
 import {ApiResponse} from "../../Model/api-response";
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-common-add-component',
@@ -13,11 +14,13 @@ export class CommonAddComponentComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private apiService: ApiServiceService,
-              private router: Router) {
+              private router: Router,
+              private toaster: ToastrService
+  ) {
     this.bsConfig = Object.assign({ dateInputFormat: 'DD/MM/YYYY' }, { containerClass: this.colorTheme }, { isAnimated: true });
   }
   userDetails = new ApiResponse();
-  spinner; updateId; image; oldImage; setNewPassword = true; imageShow = true; colorTheme = 'theme-dark-blue';
+  spinner: boolean; updateId: string; image: any; oldImage:any; setNewPassword:boolean = true; imageShow:boolean = true; colorTheme = 'theme-dark-blue';
   bsConfig: Partial<BsDatepickerConfig>;
 
   /*
@@ -26,6 +29,7 @@ export class CommonAddComponentComponent implements OnInit {
   fileUpload(event){
     if(event.target.files.length > 0){
       this.image= event.target.files[0];
+      this.toaster.success("Image Upload Successfully");
     }
   }
 
@@ -56,6 +60,9 @@ export class CommonAddComponentComponent implements OnInit {
           this.oldImage = this.userDetails.image;
         });
       }
+    }, error => {
+      this.spinner = false;
+      this.toaster.error(error);
     });
   }
 
@@ -87,11 +94,11 @@ export class CommonAddComponentComponent implements OnInit {
         this.spinner = false;
         if(result.meta['status_code']=== 200){
           localStorage.removeItem('token');
-          alert('User Register Successfully');
+          this.toaster.success('User Register Successfully');
           this.router.navigate(['/login']);
         }
         else{
-          alert("!Oops Some Error Occurs in Register");
+          this.toaster.error('!Oops Some Error Occurs in Register');
           this.router.navigate(['/register']);
         }
       });
@@ -121,14 +128,17 @@ export class CommonAddComponentComponent implements OnInit {
       this.apiService.updateDetails(payLoad,this.updateId).subscribe(result => {
         this.spinner = false;
         if(result.meta['status_code'] === 200){
-          alert("Details Update Successfully");
+          this.toaster.success('Details Update Successfully');
           this.router.navigate(['/dashboard']);
         }
         else{
-          alert("!Opps Some Error Occurs while Update Details");
+          this.toaster.error('!Opps Some Error Occurs while Update Details');
           localStorage.removeItem('token');
           this.router.navigate(['/login']);
         }
+      }, error => {
+        this.spinner = false;
+        this.toaster.error(error);
       });
     }
   }
